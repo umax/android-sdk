@@ -1,30 +1,11 @@
-FROM gradle:4.10-jdk8-slim
+FROM gradle:jdk8-slim
 
 USER root
 
 # Install system packages
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-        curl \
-        git \
-        make \
-        python2.7 \
-        ssh \
-    && rm -rf /var/lib/apt/lists/*
-RUN curl -o get-pip.py https://bootstrap.pypa.io/get-pip.py \
-    && python2.7 get-pip.py \
-    && rm get-pip.py
-
-# AWS command line tools
-RUN pip install awscli
-
-# Install Google Cloud SDK
-RUN curl -o sdk.tar.gz "https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.tar.gz" \
-    && tar zxf sdk.tar.gz \
-    && mv google-cloud-sdk /usr/local/ \
-    && rm sdk.tar.gz \
-    && /usr/local/google-cloud-sdk/install.sh
-ENV PATH="/usr/local/google-cloud-sdk/bin:$PATH"
+RUN apt-get update && apt-get install --no-install-recommends -y curl software-properties-common
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install nodejs && rm -rf /var/lib/apt/lists/*
 
 # Install Android SDK
 ENV ANDROID_HOME="/usr/local/android-sdk"
@@ -38,7 +19,6 @@ RUN mkdir "$ANDROID_HOME" .android \
 # Install Android Build Tool and Libraries
 RUN $ANDROID_HOME/tools/bin/sdkmanager --update \
     && $ANDROID_HOME/tools/bin/sdkmanager \
-        "build-tools;28.0.2" \
         "build-tools;28.0.3" \
         "platforms;android-28" \
         "platform-tools"
