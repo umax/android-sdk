@@ -4,7 +4,7 @@ USER root
 
 # Install system packages
 RUN apt-get update && apt-get install --no-install-recommends -y curl software-properties-common
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
 
 # Install Android SDK
