@@ -1,6 +1,12 @@
 # android-sdk
 Docker image with Android SDK for CI systems
 
+#### Tag 0.9
+- Android: 29
+- Gradle: 5.4.1
+- SDK Tools: 4333796
+- Build Tools: 29.0.2
+
 #### Tag 0.8
 - Gradle: 5.4.1
 - Android: 28
